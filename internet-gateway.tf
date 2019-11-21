@@ -7,7 +7,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_route_table" "r" {
-  vpc_id = "${aws_vpc.myapp.id}"
+  vpc_id = aws_vpc.myapp.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -20,7 +20,7 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "a" {
-  count          = length(aws_subnet.public.*.id)
-  subnet_id      = aws_subnet.public.*.id[count.index]
+  count          = length(local.pub_sub_ids)
+  subnet_id      = local.pub_sub_ids[count.index]
   route_table_id = aws_route_table.r.id
 }
