@@ -14,11 +14,11 @@ terraform {
 
 resource "aws_vpc" "myapp" {
 
-  cidr_block       = "10.0.0.0/16"
+  cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
 
   tags = {
-    Name  = "JavaHomeVPC"
+    Name  = "JavaHomeVPC-${terraform.workspace}"
     Batch = "930AM"
     Year  = 2019
     Location = "Banglore"
