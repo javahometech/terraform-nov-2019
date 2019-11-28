@@ -4,9 +4,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "in.javahome.930am-oct.tf"
-    key    = "terraform.tfstate"
-    region = "ap-south-1"
+    bucket         = "in.javahome.930am-oct.tf"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"
     dynamodb_table = "javahome-db"
   }
 }
@@ -18,9 +18,9 @@ resource "aws_vpc" "myapp" {
   instance_tenancy = "default"
 
   tags = {
-    Name  = "JavaHomeVPC-${terraform.workspace}"
-    Batch = "930AM"
-    Year  = 2019
+    Name     = "JavaHomeVPC-${terraform.workspace}"
+    Batch    = "930AM"
+    Year     = 2019
     Location = "Banglore"
   }
 
