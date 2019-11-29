@@ -21,3 +21,7 @@ variable "instance_ids"{
     type = list
     description = "instance_ids for elb"
 }
+
+variable "vpc_id"{
+
+}

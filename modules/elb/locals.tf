@@ -1,3 +1,3 @@
 locals{
-    name = "${var.app_name}-${terraform.workspace}-elb"
+    name = "${var.app_name}-${terraform.workspace}"
 }

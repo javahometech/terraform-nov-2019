@@ -1,8 +1,8 @@
 # Create a new load balancer
 resource "aws_elb" "bar" {
-  name               = local.name
+  name               = "${local.name}-elb"
   subnets            = var.subnets
-
+  security_groups    = ["${aws_security_group.elb.id}"]
 
   listener {
     instance_port     = var.listner.instance_port
@@ -26,6 +26,34 @@ resource "aws_elb" "bar" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = local.name
+    Name = "${local.name}-elb"
   }
 }
+
+resource "aws_security_group" "elb" {
+  name        = "${local.name}-sg"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+   ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["106.51.110.62/32"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+}
+
