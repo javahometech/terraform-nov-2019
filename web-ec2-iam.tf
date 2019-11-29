@@ -8,6 +8,13 @@ data "template_file" "web_iam_policy" {
   }
 }
 
+data "template_file" "iam_assume_role" {
+  template = file("scripts/iam-assume-role.json")
+  vars = {
+    service_name = var.service_name
+  }
+}
+
 // IAM policy for web ec2 instance
 
 resource "aws_iam_policy" "web_policy" {
@@ -23,7 +30,7 @@ resource "aws_iam_policy" "web_policy" {
 resource "aws_iam_role" "web_role" {
   name = "web_role-${terraform.workspace}"
 
-  assume_role_policy = file("scripts/iam-assume-role.json")
+  assume_role_policy = data.template_file.iam_assume_role.rendered
 }
 
 // Web attach role and policy

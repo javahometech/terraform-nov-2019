@@ -4,7 +4,7 @@
       {
         "Action": "sts:AssumeRole",
         "Principal": {
-          "Service": "ec2.amazonaws.com"
+          "Service": "${service_name}.amazonaws.com"
         },
         "Effect": "Allow",
         "Sid": ""

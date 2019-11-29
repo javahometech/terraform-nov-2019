@@ -21,3 +21,7 @@ variable ec2_bucket {
   description = "The bucket for ec2 web servers"
   default     = "javahome-5678"
 }
+
+variable "service_name" {
+  default = "ec2"
+}

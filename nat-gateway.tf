@@ -1,3 +1,4 @@
+/*
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.nat.id
   subnet_id     = local.pub_sub_ids[0]
@@ -25,3 +26,4 @@ resource "aws_route_table_association" "b" {
   subnet_id      = local.pri_sub_ids[count.index]
   route_table_id = aws_route_table.pr.id
 }
+*/
