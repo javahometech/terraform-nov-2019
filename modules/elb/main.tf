@@ -34,21 +34,6 @@ resource "aws_security_group" "elb" {
   name        = "${local.name}-sg"
   description = "Allow TLS inbound traffic"
   vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["106.51.110.62/32"]
-  }
-
   egress {
     from_port       = 0
     to_port         = 0
@@ -57,3 +42,17 @@ resource "aws_security_group" "elb" {
   }
 }
 
+// create ingress rules for load balancer
+resource "aws_security_group_rule" "elb_rule" {
+  count           = length(var.elb_rules)
+  type            = "ingress"
+  from_port       = var.elb_rules[count.index]["from_port"]
+  to_port         = var.elb_rules[count.index]["to_port"]
+  protocol        = var.elb_rules[count.index]["protocol"]
+  cidr_blocks     = [var.elb_rules[count.index]["cidr_blocks"]]
+  security_group_id = aws_security_group.elb.id
+}
+
+variable "elb_rules"{
+  type = list(map(string))
+}
